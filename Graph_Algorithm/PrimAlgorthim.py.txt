@@ -1,0 +1,38 @@
+def getMinVertex(visited,dist,n):
+    minVertex = -1
+    for i in range(n):
+        if not visited[i] and ( minVertex==-1 or dist[minVertex]>dist[i]):
+            minVertex = i;
+    return minVertex
+
+def prims(ls,n):
+    visited = [False for i in range(n)]
+    dist = [float('inf') for i in range(n)]
+    parent = [i for i in range(n)]
+    dist[0] = 0
+    parent[0] = -1
+    for i in range(n-1):
+        minVertex = getMinVertex(visited,dist,n)
+        visited[minVertex] = True
+        for j in range(n):
+            if ls[minVertex][j]!=0 and not visited[j]:
+                if dist[j]>ls[minVertex][j]:
+                    dist[j] = ls[minVertex][j]
+                    parent[j] = minVertex
+                    
+    for i in range(1,n):
+        if i>parent[i]:
+            print(parent[i],i,dist[i])
+        else:
+            print(i,parent[i],dist[i])
+
+
+V,E = map(int,input().split())
+ls = [[0 for i in range(V)] for i in range(V)]
+
+for i in range(E):
+    u,v,w = map(int,input().split())
+    ls[u][v] = w
+    ls[v][u] = w
+
+prims(ls,V)

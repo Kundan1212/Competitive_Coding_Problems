@@ -1,0 +1,45 @@
+/*Given an undirected graph G(V, E) and two vertices v1 and v2(as integers), find and print the path from v1 to v2 (if exists). Print nothing if there is no path between v1 and v2.
+Find the path using BFS and print the shortest path available.
+V is the number of vertices present in graph G and vertices are numbered from 0 to V-1.
+E is the number of edges present in graph G.
+Print the path in reverse order. That is, print v2 first, then intermediate vertices and v1 at last.*/
+
+from collections import deque
+def findPath(ls,st,end,visited,parent,V):
+    queue = deque([st])
+    visited[st] = True
+    while(len(queue)!=0):
+        #print(queue)
+        pop = queue.popleft()
+        for i in range(V):
+            if ls[pop][i]==1 and not visited[i]:
+                queue.append(i)
+                parent[i] = pop
+                visited[i] = True
+                if i==end:
+                    return           
+                
+
+V,E = map(int ,input().split())
+ls = [[0]*V for i in range(V)]
+for i in range(E):
+    u,v = map(int ,input().split())
+    ls[u][v] = 1
+    ls[v][u] = 1
+
+visited = [False]*V
+st,end = map(int,input().split())
+#print(ls,st,end)
+visited[st] = True
+parent = [-1]*V
+findPath(ls,st,end,visited,parent,V)
+#print(parent)
+ls = []
+while parent[end]!=-1:
+    ls.append(end)
+    end = parent[end]
+    if end==st:
+        ls.append(st)
+        break
+for i in ls:
+    print(i,end=" ")

@@ -1,0 +1,21 @@
+          
+            
+V,E = map(int ,input().split())
+ls = [[0]*V for i in range(V)]
+for i in range(E):
+    u,v = map(int ,input().split())
+    ls[u][v] = 1
+    ls[v][u] = 1
+
+visited = [False]*V
+visited[0] = True
+queue = [0]
+while len(queue)!=0:
+    pop = queue.pop(0)
+    print(pop,end = " ")
+    for i in range(V):
+        if ls[pop][i] and not visited[i]:
+            queue.append(i)
+            visited[i] = True
+    
+    

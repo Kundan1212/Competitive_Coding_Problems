@@ -1,0 +1,34 @@
+def getMinVertex(visited,dist,n):
+    minVertex = -1
+    for i in range(n):
+        if not visited[i] and ( minVertex==-1 or dist[minVertex]>dist[i]):
+            minVertex = i;
+    return minVertex
+
+def dijkastra(ls,n):
+    visited = [False for i in range(n)]
+    dist = [float('inf') for i in range(n)]
+    dist[0] = 0
+    #parent[0] = -1
+    for i in range(n-1):
+        minVertex = getMinVertex(visited,dist,n)
+        visited[minVertex] = True
+        for j in range(n):
+            if ls[minVertex][j]!=0 and not visited[j]:
+                currD = ls[minVertex][j] + dist[minVertex]
+                if dist[j]>currD:
+                    dist[j] = currD
+                    
+    for i in range(0,n):
+        print(i,dist[i])
+
+
+V,E = map(int,input().split())
+ls = [[0 for i in range(V)] for i in range(V)]
+
+for i in range(E):
+    u,v,w = map(int,input().split())
+    ls[u][v] = w
+    ls[v][u] = w
+
+dijkastra(ls,V)

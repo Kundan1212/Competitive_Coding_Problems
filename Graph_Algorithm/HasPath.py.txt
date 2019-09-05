@@ -1,0 +1,27 @@
+/* Given an undirected graph G(V, E) and two vertices v1 and v2(as integers), check if there exists any path between them or not. Print true or false.
+V is the number of vertices present in graph G and vertices are numbered from 0 to V-1.
+E is the number of edges present in graph G. * /
+
+
+def bfsPath(ls,st,end,visited,V):
+    visited[st] = True
+    for i in range(V):
+        if not visited[i] and ls[st][i]==1:
+            bfsPath(ls,i,end,visited,V)      
+    
+            
+V,E = map(int ,input().split())
+ls = [[0]*V for i in range(V)]
+for i in range(E):
+    u,v = map(int ,input().split())
+    ls[u][v] = 1
+    ls[v][u] = 1
+
+visited = [False]*V
+visited[0] = True
+st,end = map(int,input().split())
+bfsPath(ls,st,end,visited,V)
+if visited[end]:
+    print("true")
+else:
+    print("false")

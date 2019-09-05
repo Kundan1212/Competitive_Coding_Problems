@@ -1,0 +1,34 @@
+def getParent(parent,vertex):
+    if vertex == parent[vertex]:
+        return vertex
+    return getParent(parent,parent[vertex])
+
+def kruskal(ls,n):
+    parent = [i for i in range(n)]
+    result = []
+    count=0
+    i = 0
+    while count<n-1:
+        curr = ls[i]
+        srcP = getParent(parent,curr[0])
+        desP = getParent(parent,curr[1])
+        if srcP!=desP:
+            result.append(curr)
+            count+=1
+            parent[srcP] = desP
+        i+=1
+    for edge in result:
+        if edge[0]>edge[1]:
+            print(edge[1],edge[0],edge[2])
+        else:
+            print(edge[0],edge[1],edge[2])
+            
+
+V,E = map(int,input().split())
+ls = []
+for i in range(E):
+    a = [int(x) for x in input().split()]
+    ls.append(a)
+ls.sort(key = lambda x:x[2])
+
+kruskal(ls,V)

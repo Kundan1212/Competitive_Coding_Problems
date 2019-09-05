@@ -1,0 +1,30 @@
+def findPath(ls,st,end,visited,path,V):
+    #print(path,st)
+    if st==end:
+        return True
+    for i in range(V):
+        if ls[st][i]==1 and not visited[i]:
+            visited[i] = True
+            if findPath(ls,i,end,visited,path,V):
+                path.append(i)
+                return True
+            
+
+V,E = map(int ,input().split())
+ls = [[0]*V for i in range(V)]
+for i in range(E):
+    u,v = map(int ,input().split())
+    ls[u][v] = 1
+    ls[v][u] = 1
+
+visited = [False]*V
+st,end = map(int,input().split())
+#print(ls,st,end)
+visited[st] = True
+path = []
+findPath(ls,st,end,visited,path,V)
+if len(path)>0 or st==end:
+    path.append(st)
+    
+for i in path:
+    print(i,end=" ")
